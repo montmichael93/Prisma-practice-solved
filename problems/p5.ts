@@ -11,14 +11,14 @@ export const getAllMoviesWithAverageScoreOverN = async (n: number) => {
   });
 
   const filteredRatingList = ratingList.filter(
-    (rating) => rating._avg.score && rating._avg.score > n && rating.movieId
+    (rating) => rating._avg.score && rating._avg.score > n && rating?.movieId
   );
 
   const filmList = await Promise.all(
     filteredRatingList.map(async (listing) => {
       return await prisma.movie.findUnique({
         where: {
-          id: listing.movieId,
+          id: listing?.movieId,
         },
       });
     })

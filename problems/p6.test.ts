@@ -31,7 +31,7 @@ describe("p6", () => {
 
     const actual = pipe(
       await findAllMoviesThatAUserWatched(rachel.id),
-      sortBy((movie) => movie.id)
+      sortBy((movie) => movie!.id)
     );
     expect(actual).toEqual(expected);
   });
@@ -54,7 +54,7 @@ describe("p6", () => {
 
     const actual = pipe(
       await findAllMoviesThatAUserWatched(jon.id),
-      sortBy((movie) => movie.id)
+      sortBy((movie) => movie!.id)
     );
 
     expect(actual).toEqual(expected);

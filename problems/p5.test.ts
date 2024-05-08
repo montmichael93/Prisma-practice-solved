@@ -33,7 +33,7 @@ describe("p4", () => {
     );
     const actual = pipe(
       await getAllMoviesWithAverageScoreOverN(3),
-      sortBy((movie) => movie.id)
+      sortBy((movie) => movie!.id)
     );
 
     expect(actual).toEqual(expected);
@@ -58,7 +58,7 @@ describe("p4", () => {
 
     const actual = pipe(
       await getAllMoviesWithAverageScoreOverN(4),
-      sortBy((movie) => movie.id)
+      sortBy((movie) => movie!.id)
     );
 
     expect(actual).toEqual(expected);

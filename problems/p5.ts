@@ -5,24 +5,20 @@ import { prisma } from "./prisma";
 export const getAllMoviesWithAverageScoreOverN = async (n: number) => {
   const ratingList = await prisma.starRating.groupBy({
     by: ["movieId"],
-    _avg: {
-      score: true,
+    having: {
+      score: {
+        _avg: {
+          gt: n,
+        },
+      },
     },
   });
 
-  const filteredRatingList = ratingList.filter(
-    (rating) => rating._avg.score && rating._avg.score > n && rating?.movieId
-  );
-
-  const filmList = await Promise.all(
-    filteredRatingList.map(async (listing) => {
-      return await prisma.movie.findUnique({
-        where: {
-          id: listing?.movieId,
-        },
-      });
-    })
-  );
-
-  return filmList;
+  return prisma.movie.findMany({
+    where: {
+      id: {
+        in: ratingList.map((rating) => rating.movieId),
+      },
+    },
+  });
 };
